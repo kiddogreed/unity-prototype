@@ -3,20 +3,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 20f;
-    public float minSpeed = 5f;
-    public float maxSpeed = 60f;
-    public float turnSpeed = 100f;
+    private float moveSpeed = 15f;
+    private float minSpeed = 5f;
+    private float maxSpeed = 60f;
+    private float turnSpeed = 100f;
     private bool isMoving = true;
+    private int moveDirection = 1; // 1 for forward, -1 for backward
 
     public GameObject projectilePrefab;
     public float shootForce = 30f;
     public float projectileLifetime = 3f;
     public Vector3 projectileOffset = new Vector3(0, 3, 5);
     public float recoilForce = 10f;
-    private Rigidbody rb;
+    public Rigidbody rb;
 
-    private float horizontal = 0f;
+    public float horizontal = 0f;
 
     void Start()
     {
@@ -26,6 +27,9 @@ public class PlayerController : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody>();
             rb.useGravity = false;
         }
+        // Prevent tilting by freezing rotation on X and Z axes
+        rb.freezeRotation = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     void Update()
@@ -40,11 +44,21 @@ public class PlayerController : MonoBehaviour
             if (keyboard.rightArrowKey.isPressed)
                 horizontal = 1f;
 
-            if (keyboard.downArrowKey.wasPressedThisFrame)
-                isMoving = false;
-
-            if (keyboard.upArrowKey.wasPressedThisFrame)
+            // Move backward while holding down arrow, forward with up arrow
+            if (keyboard.downArrowKey.isPressed)
+            {
                 isMoving = true;
+                moveDirection = -1;
+            }
+            else if (keyboard.upArrowKey.isPressed)
+            {
+                isMoving = true;
+                moveDirection = 1;
+            }
+            else if (!keyboard.upArrowKey.isPressed && !keyboard.downArrowKey.isPressed)
+            {
+                isMoving = false;
+            }
 
             if (keyboard.spaceKey.wasPressedThisFrame && projectilePrefab != null)
             {
@@ -81,8 +95,8 @@ public class PlayerController : MonoBehaviour
         {
             if (isMoving)
             {
-                // Use AddForce for forward movement so recoil is not overridden
-                rb.AddForce(transform.forward * moveSpeed, ForceMode.Acceleration);
+                // Move forward or backward based on moveDirection
+                rb.AddForce(transform.forward * moveSpeed * moveDirection, ForceMode.Acceleration);
             }
 
             // Clamp the velocity to maxSpeed
