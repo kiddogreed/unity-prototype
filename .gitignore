@@ -44,7 +44,6 @@ crashlytics-build.properties
 /Library
 
 #Allow the script folder inside assets
-!/Assets/Scripts/*
-
+!/Assets/Scripts/*.cs
 
 
