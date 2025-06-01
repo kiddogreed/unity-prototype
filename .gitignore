@@ -39,11 +39,11 @@ crashlytics-build.properties
 *.sln.iml
 
 
-#bigfiles
-/Assets
-/Library
 
 #Allow the script folder inside assets
 !/Assets/Scripts/*.cs
 
 
+#bigfiles
+/Assets
+/Library
