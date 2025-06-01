@@ -38,11 +38,17 @@ crashlytics-build.properties
 .idea/
 *.sln.iml
 
+# --- Custom rules for Assets/Scripts ---
 
+# Ignore everything in Assets by default
+/Assets/*
 
-#Allow the script folder inside assets
+# But do NOT ignore the Scripts folder and its contents
 !/Assets/Scripts/
+!/Assets/Scripts/**
 
-#bigfiles
-/Assets
-/Library
+# Allow all .cs files in Assets/Scripts and subfolders
+!/Assets/Scripts/**/*.cs
+
+# Still ignore Library and other big folders
+/Library/
