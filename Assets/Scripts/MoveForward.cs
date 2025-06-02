@@ -4,7 +4,7 @@ public class MoveForward : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public float speed = 40.0f;
+    public float speed = 8f;
     void Start()
     {
         
