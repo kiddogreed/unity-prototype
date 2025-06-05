@@ -2,20 +2,28 @@ using UnityEngine;
 
 public class DetechCollision : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Static score variable accessible from anywhere
+    public static int score = 0;
 
-    void Start()
-    {
-        // Initialization code can go here if needed
-    }
-
-    void Update()
-    {
-        // This method is called once per frame
-        // You can add code here if you need to update something every frame
-    }
     void OnTriggerEnter(Collider other)
-  {
-    Destroy(other.gameObject);
+    {
+        // Check if this is the food prefab and it hits an animal
+        if (gameObject.CompareTag("Food") && other.CompareTag("Animal"))
+        {
+            // Reduce animal health and check if destroyed
+            AnimalHealth animalHealth = other.GetComponent<AnimalHealth>();
+            if (animalHealth != null)
+            {
+                bool destroyed = animalHealth.TakeDamage(1);
+                if (destroyed)
+                {
+                    score++;
+                    Debug.Log("Score: " + score);
+                }
+            }
+
+            // Destroy the food projectile
+            Destroy(gameObject);
+        }
     }
 }

@@ -3,8 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private float moveSpeed = 15f;
-    private float minSpeed = 5f;
+    private float moveSpeed = 40f;
     private float maxSpeed = 60f;
     private float turnSpeed = 100f;
     private bool isMoving = true;

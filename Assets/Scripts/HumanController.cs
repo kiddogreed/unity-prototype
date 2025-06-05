@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class HumanController : MonoBehaviour
 {
-    public float moveSpeed = 10f;
+    public float moveSpeed = 30f;
     public float minX = -24f;
     public float maxX = 24f;
     public float minZ = -2f;
