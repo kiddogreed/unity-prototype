@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScriptx : MonoBehaviour
+public class P3CarMovement : MonoBehaviour
 {
+    private float speed = 10f; // Speed of the car
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public float speed = 5.0f;
     void Start()
     {
         
@@ -12,6 +12,6 @@ public class NewMonoBehaviourScriptx : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime * speed);
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 }
